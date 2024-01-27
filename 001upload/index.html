@@ -1,0 +1,74 @@
+<html>
+<body class="m-2">
+  <label for="a" class="btn btn-primary">点击上传</label>
+  <input id='a' name="file" type="file" 
+  accept="image/png, image/jpeg, video/*" style="display:none;" multiple='multiple'>
+  <script>
+    async function main() {
+
+      const l = console.log
+      let fileEle = document.querySelector('#a')
+      fileEle.onchange = e => {
+        let files = fileEle.files
+        if(files.length === 0) return false;
+
+        let data = new FormData()
+        for(const file of files){
+          data.append('files', file)
+        }
+
+        let xhr = new XMLHttpRequest()
+        
+        xhr.upload.addEventListener('progress', e => {
+          if (e.lengthComputable) {
+            var percentage = Math.round((e.loaded * 100) / e.total);
+            l(`${percentage}%`)
+          }
+        })
+		
+		
+		xhr.upload.addEventListener('loadstart', e => {
+		  l('上传开始')
+		})
+		
+		xhr.upload.addEventListener('error', e => {
+		  l('上传失败')
+		})
+		
+		xhr.upload.addEventListener('abort', e => {
+		  l('上传终止')
+		})
+		
+		xhr.upload.addEventListener('timeout', e => {
+		  l('由于预设时间到期，上传终止')
+		})
+		
+		xhr.upload.addEventListener('load', e => {
+		  l('上传成功了')
+		})
+		
+		xhr.upload.addEventListener('loadend', e => {
+		  l('上传已经停止了')
+		})
+		
+		
+		
+        xhr.open('post', 'http://localhost:9000/upload')
+        xhr.responseType = 'json'
+        xhr.send(data)
+
+
+
+        xhr.onload = () => {
+			console.log(xhr)
+		   // l(...xhr.response);
+     //      l(...xhr.response.imgsSrc);
+        }
+
+      }
+    }
+    main();
+  </script>
+</body>
+
+</html>
