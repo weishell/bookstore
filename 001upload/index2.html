@@ -1,0 +1,72 @@
+<html>
+  <head>
+    <meta charset="UTF-8" />
+  </head>
+  <body class="m-2">
+    <label for="a" class="btn btn-primary">点击上传</label>
+    <input
+      id="a"
+      name="file"
+      type="file"
+      accept="image/png, image/jpeg, video/*"
+      style="display: none"
+      multiple="multiple"
+    />
+    <button id="get1">get1</button>
+    <button id="get2">get2</button>
+    <button id="get3">get3</button>
+
+    <button id="post1">post1</button>
+    <button id="post2">post1</button>
+
+    <script>
+      async function main() {
+        const l = console.log;
+        let fileEle = document.querySelector("#a");
+        const get1 = document.getElementById("get1");
+        const get2 = document.getElementById("get2");
+        const get3 = document.getElementById("get3");
+
+        const post1 = document.getElementById("post1");
+        const post2 = document.getElementById("post2");
+
+        get1.onclick = function () {
+          ajax("get", "", "get1?k1=1&k2=2", "get1");
+        };
+        get2.onclick = function () {
+          ajax("get", "", "get2/3/4", "get2");
+        };
+        get3.onclick = function () {
+          ajax("get", "{k5:5,k:6}", "get3", "get3");
+        };
+        post1.onclick = function () {
+          ajax("post", "{k7:5,k8:6}", "post1", "post1");
+        };
+        post2.onclick = function () {
+          ajax("post", "{k5:5,k:6}", "post1?k9=9&k10=10", "post2");
+        };
+
+        function ajax(methods, data, url, other) {
+          let xhr = new XMLHttpRequest();
+          xhr.open(methods, `http://localhost:9000/${url}`);
+          if (other === "get3") {
+            xhr.setRequestHeader("Content-Type", "application/json");
+          }
+          if(other === 'post2'){
+            xhr.setRequestHeader("Content-Type", "application/x-www-form-urlencoded");
+          }
+          if(other ==='post1'){
+            xhr.setRequestHeader("Content-Type", "application/json");
+          }
+          xhr.send(JSON.stringify(data));
+          xhr.onreadystatechange = function () {
+            if (xhr.readyState === 4 && xhr.status === 200) {
+              console.log(xhr.responseText);
+            }
+          };
+        }
+      }
+      main();
+    </script>
+  </body>
+</html>

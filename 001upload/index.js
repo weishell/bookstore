@@ -41,7 +41,7 @@ if(req.method.toLowerCase()=='post'){
 	  // 随机数
 		var random=parseInt(Math.random()*10000)
 		// 图片拓展名 .JPG .png
-		var extname=path.extname(files.files[0].filepath)
+		var extname=path.extname(files.files[0].originalFilename)
 			// 新的文件名=__dirname+存放上传图片的文件夹地址+时间戳+随机数+后缀名
 		var newpath=__dirname + '/uploadImg/'+	time + random +extname
 		// console.log(newpath)
