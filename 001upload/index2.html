@@ -17,7 +17,7 @@
     <button id="get3">get3</button>
 
     <button id="post1">post1</button>
-    <button id="post2">post1</button>
+    <button id="post2">post2</button>
 
     <script>
       async function main() {
@@ -40,7 +40,7 @@
           ajax("get", "{k5:5,k:6}", "get3", "get3");
         };
         post1.onclick = function () {
-          ajax("post", "{k7:5,k8:6}", "post1", "post1");
+          ajax("post", "{k7:5,k8:6}", "post1?k9=99&k10=100", "post1");
         };
         post2.onclick = function () {
           ajax("post", "{k5:5,k:6}", "post1?k9=9&k10=10", "post2");
