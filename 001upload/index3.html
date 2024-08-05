@@ -24,45 +24,58 @@
 					img.src  = e.target.result
 
 					setTimeout(() => {
-						const canvas = document.createElement('canvas');  
+					const canvas = document.createElement('canvas');  
   					canvas.width = img.width;  
   					canvas.height = img.height;  
   					const ctx = canvas.getContext('2d');  
 
 
 					ctx.drawImage(img, 0, 0, img.width, img.height); 
-
-
 					
-
-					// img.src = e.target.result;
-
+					//用于从指定的 <canvas> 元素中提取图像数据。这个方法返回一个 ImageData 对象，该对象包含了指定矩形区域内的像素数据。
 					let imageData = ctx.getImageData(0, 0, canvas.width, canvas.height);   
-
-					  // 使用TypedArray来操作图像数据  
+					console.log(imageData)
+					  // 使用TypedArray来操作图像数据
+						
+					//imageData.data 是一个 Uint8ClampedArray，这是 HTML5 Canvas API 中用于表示图像数据的类型数组。
+					//在这个数组中，每个像素由四个连续的元素表示，分别对应红、绿、蓝和 alpha（透明度）通道。
+					//每个通道的值是一个 0 到 255 的整数，而不是 0 到 1 的浮点数。
 						const data = imageData.data; // 这是一个Uint8ClampedArray  
 						for (let i = 0; i < data.length; i += 4) {  
 							// 假设第一个通道为红色  
 							data[i] = 255; // R  
 							// data[i + 1] = 0; // G  
 							// data[i + 2] = 0; // B  
-							data[i + 3] = 200; // Alpha通道  
+							data[i + 3] = 160; // Alpha通道  
 						}  
-					// 将修改后的数据放回canvas  
+					// 将修改后的数据放回canvas   ctx.putImageData() 是 HTML5 Canvas API 中的一个方法，用于将 ImageData 对象（通常是从 ctx.getImageData() 获取的）放回 <canvas> 元素。这样，你可以对像素数据进行操作，然后将修改后的数据绘制回画布上。
   					ctx.putImageData(imageData, 0, 0);  
   
 					// 可选：将canvas内容转换回图像并显示在页面上  
 					// 您可以直接使用canvas元素或者将其转换为Blob URL  
 					img.src = canvas.toDataURL('image/png'); 
+					//输出类似于 "data:image/png;base64,iVBORw0KGg..."
 					});
 				 
 					
-					// 如果您需要Blob URL  
+					// 如果需要Blob URL ,它用于将画布上的图像转换为一个Blob对象 
 					// canvas.toBlob(function(blob) {  
 					// 	const itemUrl = URL.createObjectURL(blob);  
 					// 	console.log(itemUrl); // 这里打印Blob URL  
-					// 	// 您可以使用这个URL做其他事情，比如赋值给另一个img元素的src属性  
+					// 	// 可以使用这个URL做其他事情，比如赋值给另一个img元素的src属性  
 					// }, 'image/png');  
+					
+					// // 假设我们已经创建了一个 Blob 对象  
+					// var blob = new Blob(["Hello, world!"], { type: 'text/plain' });  
+					  
+					// // 创建一个代表该 Blob 的 URL  
+					// var url = URL.createObjectURL(blob);  
+					  
+					// // 假设我们后来不再需要这个 URL 了  
+					// //如果不再需要预览图像，你应该在某个时刻（如页面卸载时）撤销该 URL。
+					// 然而，在大多数情况下，浏览器会在页面卸载时自动清理这些资源。
+					// // 我们可以通过调用 URL.revokeObjectURL() 来释放它  
+					URL.revokeObjectURL(url);
 				};
 				fr.readAsDataURL(file);
 			}

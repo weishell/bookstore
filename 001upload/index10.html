@@ -11,7 +11,7 @@ initUpload();
  
 //初始化上传
 function initUpload() {
- var chunk = 10 * 1024; //每片大小
+ var chunk = 1 * 1024; //每片大小
  var input = document.getElementById("a"); //input file
  input.onchange = function (e) {
   var file = this.files[0];
@@ -96,7 +96,8 @@ function getFileBinary(file, cb) {
  reader.readAsArrayBuffer(file);
  reader.onload = function (e) {
   if (typeof cb === "function") {
-   cb.call(this, this.result);
+   // cb.call(this, this.result);
+   cb(this.result)
   }
  }
 }
