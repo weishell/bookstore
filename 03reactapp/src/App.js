@@ -21,6 +21,8 @@ import C3 from './component/C3'
 import C4 from './component/C4'
 
 
+import Smzq from './page/Smzqf.js'
+
 
 
 import store from './store/index.js';
@@ -40,6 +42,9 @@ export default function App() {
             <li>  
               <a href="/contact">Contact</a>  
             </li>  
+
+            <Smzq/>
+
             <C1 store={store}/>
             <C2 />
             <C3 />

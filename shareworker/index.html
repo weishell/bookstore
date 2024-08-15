@@ -1,0 +1,34 @@
+<!DOCTYPE html>  
+<html lang="en">  
+<head>  
+<meta charset="UTF-8">  
+<meta name="viewport" content="width=device-width, initial-scale=1.0">  
+<title>SharedWorker Example</title>  
+</head>  
+<body>  
+  
+<h1>SharedWorker Example</h1>  
+  
+<button onclick="sendMessage()">Send Message to SharedWorker</button>  
+  
+<script>  
+// 连接到SharedWorker  
+var worker = new SharedWorker('./sharedworker.js');  
+  
+// 连接到SharedWorker的端口  
+var port = worker.port;  
+
+// 监听从SharedWorker发送的消息  
+port.onmessage = function(e) {  
+  console.log('从sharedwork获取到信息', e.data);  
+  // 在这里，你可以根据接收到的消息更新页面或其他操作  
+};  
+  
+// 发送消息到SharedWorker的函数  
+function sendMessage() {  
+  port.postMessage('html页面发送的消息');  
+}  
+</script>  
+  
+</body>  
+</html>

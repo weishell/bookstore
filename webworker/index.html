@@ -1,0 +1,33 @@
+<!DOCTYPE html>  
+<html lang="en">  
+<head>  
+    <meta charset="UTF-8">  
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">  
+    <title>Web Worker Example</title>  
+</head>  
+<body>  
+
+<script>  
+// 创建一个新的 worker  
+var worker = new Worker('fibonacci-worker.js');  
+
+// 监听来自 worker 的消息  
+worker.onmessage = function(e) {  
+  console.log('Main: Message received from worker', e.data);  
+  // 在这里，你可以将结果用于更新 DOM 或其他操作  
+  alert('Fibonacci(' + n + ') = ' + e.data);  
+};  
+
+// 发送消息到 worker  
+var n = 10; // 你可以更改这个值来测试不同的斐波那契数  
+worker.postMessage(n);  
+
+// 当我们不再需要 worker 时，应该将其终止  
+// 例如，当用户关闭包含 worker 的页面时  
+// window.addEventListener('beforeunload', function() {  
+//   worker.terminate();  
+// });  
+</script>  
+
+</body>  
+</html>
